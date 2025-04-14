@@ -33,7 +33,7 @@ public class Profile {
 
     String role = "ROLE_USER";
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "profile_team",
             joinColumns =  @JoinColumn(name = "profile_id"),

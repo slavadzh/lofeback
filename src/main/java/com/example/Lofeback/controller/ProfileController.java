@@ -49,6 +49,11 @@ public class ProfileController {
         return ResponseEntity.ok("Profile deleted");
     }
 
+    @GetMapping("/lk")
+    public ProfileDTO getLk() {
+        return profileService.getLK();
+    }
+
     @PatchMapping("/{profile_id}/addTeam/{team_id}")
     public ResponseEntity<?> addTeam(@PathVariable("profile_id") Long profileId, @PathVariable("team_id") Long teamId) {
         var team = teamService.getById(teamId);

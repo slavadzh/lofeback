@@ -32,4 +32,8 @@ public class ProfileDetails implements UserDetails {
     public String getUsername() {
         return profile.getUsername();
     }
+
+    public Profile getProfile() {
+        return profile;
+    }
 }

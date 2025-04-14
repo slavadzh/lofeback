@@ -27,7 +27,7 @@ public class Team {
 
     String description;
 
-    @ManyToMany(mappedBy = "teams")
+    @ManyToMany(mappedBy = "teams", fetch = FetchType.EAGER)
     @Builder.Default
     @JsonIgnore
     Set<Profile> profiles = new HashSet<>();

@@ -6,12 +6,13 @@ import com.example.Lofeback.entity.Profile;
 import com.example.Lofeback.entity.Team;
 import com.example.Lofeback.repository.ProfileRepository;
 import com.example.Lofeback.repository.TeamRepository;
+import com.example.Lofeback.security.ProfileDetails;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
+import org.springframework.security.core.Authentication;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
@@ -68,6 +69,16 @@ public class ProfileService {
         var profile = toEntity(profileDTO);
         profile.setPassword(passwordEncoder.encode(profile.getPassword()));
         profileRepository.save(profile);
+    }
+
+    public Profile getAuthProfile() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        ProfileDetails profileDetails = (ProfileDetails) authentication.getPrincipal();
+        return profileDetails.getProfile();
+    }
+
+    public ProfileDTO getLK() {
+        return toDto(getAuthProfile());
     }
 
     private Profile toEntity(ProfileDTO profileDTO) {
