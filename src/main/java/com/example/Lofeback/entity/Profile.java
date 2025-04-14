@@ -31,6 +31,8 @@ public class Profile {
     @Column(unique = true, nullable = false)
     String password;
 
+    String role = "ROLE_USER";
+
     @ManyToMany
     @JoinTable(
             name = "profile_team",

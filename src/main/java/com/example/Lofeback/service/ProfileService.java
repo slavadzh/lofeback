@@ -9,6 +9,8 @@ import com.example.Lofeback.repository.TeamRepository;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.stereotype.Service;
 
@@ -23,7 +25,9 @@ public class ProfileService {
 
     private final ProfileRepository profileRepository;
     private final TeamRepository teamRepository;
+    private final PasswordEncoder passwordEncoder;
     private final ModelMapper modelMapper;
+
 
     @Transactional
     public void save(ProfileDTO profileDTO) {
@@ -59,6 +63,12 @@ public class ProfileService {
         profileRepository.deleteById(id);
     }
 
+    @Transactional
+    public void register(ProfileDTO profileDTO) {
+        var profile = toEntity(profileDTO);
+        profile.setPassword(passwordEncoder.encode(profile.getPassword()));
+        profileRepository.save(profile);
+    }
 
     private Profile toEntity(ProfileDTO profileDTO) {
         Profile profile = modelMapper.map(profileDTO, Profile.class);
