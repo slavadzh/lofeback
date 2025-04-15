@@ -28,8 +28,11 @@ public class SecurityConfig {
         return http
                 .authorizeHttpRequests(authorizeRequests ->
                         authorizeRequests
-                                .requestMatchers("/profile/**").hasRole("USER")
-                                .anyRequest().permitAll()
+                                .requestMatchers("/profile/addTeam/**").hasAnyRole("USER", "ADMIN")
+                                .requestMatchers("/profile/lk").hasRole("USER")
+                                .requestMatchers("/profile/**").hasRole("ADMIN")
+                                .requestMatchers("auth/**").permitAll()
+                                .anyRequest().hasRole("ADMIN")
 
                 )
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)

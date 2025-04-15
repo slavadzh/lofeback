@@ -18,7 +18,6 @@ import java.util.List;
 public class ProfileController {
 
     private final ProfileService profileService;
-    private final TeamService teamService;
 
     @GetMapping
     public List<ProfileDTO> getAll() {
@@ -54,10 +53,9 @@ public class ProfileController {
         return profileService.getLK();
     }
 
-    @PatchMapping("/{profile_id}/addTeam/{team_id}")
-    public ResponseEntity<?> addTeam(@PathVariable("profile_id") Long profileId, @PathVariable("team_id") Long teamId) {
-        var team = teamService.getById(teamId);
-        profileService.addTeam(profileId, team);
+    @PatchMapping("/addTeam/{team_id}")
+    public ResponseEntity<?> addTeam(@PathVariable("team_id") Long teamId) {
+        profileService.addTeam(teamId);
         return ResponseEntity.ok("Team added");
     }
 }

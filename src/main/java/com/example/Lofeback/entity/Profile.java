@@ -1,5 +1,6 @@
 package com.example.Lofeback.entity;
 
+import com.example.Lofeback.enums.Role;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
@@ -31,7 +32,8 @@ public class Profile {
     @Column(unique = true, nullable = false)
     String password;
 
-    String role = "ROLE_USER";
+    @Enumerated(EnumType.STRING)
+    Role role;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(

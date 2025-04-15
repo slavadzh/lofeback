@@ -20,7 +20,7 @@ public class ProfileDetails implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return Collections.singletonList(
-                new SimpleGrantedAuthority("ROLE_USER"));
+                new SimpleGrantedAuthority(profile.getRole().name()));
     }
 
     @Override

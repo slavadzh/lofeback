@@ -1,6 +1,8 @@
 package com.example.Lofeback.dto;
 
+import com.example.Lofeback.enums.Role;
 import lombok.*;
+import lombok.experimental.FieldDefaults;
 
 import java.util.Set;
 
@@ -9,9 +11,12 @@ import java.util.Set;
 @Getter
 @Setter
 @Builder
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class ProfileDTO {
-    private String username;
-    private String login;
-    private String password;
-    private Set<Long> teamIds;
+    String username;
+    String login;
+    String password;
+    Role role;
+    Set<Long> teamIds;
+
 }

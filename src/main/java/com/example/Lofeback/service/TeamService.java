@@ -1,6 +1,5 @@
 package com.example.Lofeback.service;
 
-import com.example.Lofeback.dto.ProfileDTO;
 import com.example.Lofeback.dto.TeamDTO;
 import com.example.Lofeback.entity.Profile;
 import com.example.Lofeback.entity.Team;
@@ -13,7 +12,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -68,5 +66,9 @@ public class TeamService {
                 .collect(Collectors.toSet());
         dto.setProfileIds(profileIds);
         return dto;
+    }
+
+    public List<Team> findAllById(Set<Long> teamIds) {
+        return teamRepository.findAllById(teamIds);
     }
 }
