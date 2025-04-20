@@ -25,7 +25,7 @@ import java.util.stream.Collectors;
 public class ProfileService {
 
     private final ProfileRepository profileRepository;
-    private final TeamService teamService;
+    private final TeamRepository teamRepository;
     private final PasswordEncoder passwordEncoder;
     private final ModelMapper modelMapper;
 
@@ -45,7 +45,7 @@ public class ProfileService {
 
     @Transactional
     public void addTeam(Long teamId) {
-        var team = teamService.getById(teamId);
+        var team = teamRepository.getById(teamId);
         Profile profile = getAuthProfile();
         profile.getTeams().add(team);
         profileRepository.save(profile);
@@ -85,7 +85,7 @@ public class ProfileService {
     private Profile toEntity(ProfileDTO profileDTO) {
         Profile profile = modelMapper.map(profileDTO, Profile.class);
         if (profileDTO.getTeamIds() != null) {
-            Set<Team> teams = new HashSet<>(teamService.findAllById(profileDTO.getTeamIds()));
+            Set<Team> teams = new HashSet<>(teamRepository.findAllById(profileDTO.getTeamIds()));
             profile.setTeams(teams);
         }
         return profile;

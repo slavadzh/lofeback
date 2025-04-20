@@ -1,6 +1,7 @@
 package com.example.Lofeback.security;
 
 import com.example.Lofeback.entity.Profile;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

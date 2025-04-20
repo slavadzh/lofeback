@@ -5,7 +5,9 @@ import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -31,4 +33,7 @@ public class Team {
     @Builder.Default
     @JsonIgnore
     Set<Profile> profiles = new HashSet<>();
+
+    @OneToMany(mappedBy = "team")
+    List<Product> products = new ArrayList<>();
 }

@@ -5,7 +5,7 @@ import com.example.Lofeback.entity.Profile;
 import com.example.Lofeback.entity.Team;
 import com.example.Lofeback.repository.ProfileRepository;
 import com.example.Lofeback.repository.TeamRepository;
-import jakarta.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
@@ -17,6 +17,7 @@ import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
+@Transactional(readOnly = true)
 public class TeamService {
 
     private final TeamRepository teamRepository;
