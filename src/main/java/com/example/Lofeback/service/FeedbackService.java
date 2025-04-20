@@ -9,6 +9,9 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 @AllArgsConstructor
 @Transactional(readOnly = true)
@@ -23,6 +26,23 @@ public class FeedbackService {
         feedbackRepository.save(toEntity(feedbackDTO));
     }
 
+    public List<FeedbackDTO> findAll() {
+        return  feedbackRepository.findAll().stream().map(this::toDto).collect(Collectors.toList());
+    }
+
+    @Transactional
+    public void update(Long id, FeedbackDTO feedbackDTO) {
+        Feedback feedback = feedbackRepository.findById(id).orElse(null);
+        feedback.setDescription(feedbackDTO.getDescription());
+        feedback.setRating(feedbackDTO.getRating());
+        feedbackRepository.save(feedback);
+    }
+
+    @Transactional
+    public void delete(Long id) {
+        feedbackRepository.deleteById(id);
+    }
+
     public Feedback toEntity(FeedbackDTO feedbackDTO) {
         Feedback feedback = new Feedback();
         feedback.setDescription(feedbackDTO.getDescription());
@@ -32,7 +52,7 @@ public class FeedbackService {
         return feedback;
     }
 
-    public FeedbackDTO toDTO(Feedback feedback) {
+    public FeedbackDTO toDto(Feedback feedback) {
         FeedbackDTO feedbackDTO = new FeedbackDTO();
         feedbackDTO.setDescription(feedback.getDescription());
         feedbackDTO.setRating(feedback.getRating());

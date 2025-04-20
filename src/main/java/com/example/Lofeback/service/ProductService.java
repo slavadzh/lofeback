@@ -62,7 +62,7 @@ public class ProductService {
         productDTO.setName(product.getName());
         productDTO.setDescription(product.getDescription());
         productDTO.setTeamId(product.getTeam().getId());
-        productDTO.setFeedbacks(product.getFeedbacks().stream().map(feedbackService::toDTO).collect(Collectors.toList()));
+        productDTO.setFeedbacks(product.getFeedbacks().stream().map(feedbackService::toDto).collect(Collectors.toList()));
         return productDTO;
     }
 }
