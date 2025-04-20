@@ -21,7 +21,7 @@ public class ProductService {
 
     private final TeamRepository teamRepository;
     private ProductRepository productRepository;
-    private ModelMapper modelMapper;
+    private final FeedbackService feedbackService;
 
     @Transactional
     public void save(ProductDTO productDTO) {
@@ -62,6 +62,7 @@ public class ProductService {
         productDTO.setName(product.getName());
         productDTO.setDescription(product.getDescription());
         productDTO.setTeamId(product.getTeam().getId());
+        productDTO.setFeedbacks(product.getFeedbacks().stream().map(feedbackService::toDTO).collect(Collectors.toList()));
         return productDTO;
     }
 }

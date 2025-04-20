@@ -13,4 +13,5 @@ public class FeedbackDTO {
     String description;
     Integer rating;
     Long productId;
+    Long profileId;
 }
