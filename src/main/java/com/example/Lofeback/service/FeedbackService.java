@@ -44,11 +44,19 @@ public class FeedbackService {
     }
 
     public Feedback toEntity(FeedbackDTO feedbackDTO) {
+        var currProfile = profileService.getAuthProfile();
+        var currProduct = productRepository.findById(feedbackDTO.getProductId()).orElse(null);
         Feedback feedback = new Feedback();
-        feedback.setDescription(feedbackDTO.getDescription());
-        feedback.setRating(feedbackDTO.getRating());
-        feedback.setProduct(productRepository.findById(feedbackDTO.getProductId()).orElse(null));
-        feedback.setProfile(profileService.getAuthProfile());
+        if(currProfile.getTeams().stream().anyMatch(team ->
+                team.getId().equals(currProduct.getTeam().getId()))) {
+            feedback.setDescription(feedbackDTO.getDescription());
+            feedback.setRating(feedbackDTO.getRating());
+            feedback.setProduct(productRepository.findById(feedbackDTO.getProductId()).orElse(null));
+            feedback.setProfile(profileService.getAuthProfile());
+        }
+        else {
+            throw new RuntimeException("пользователь и данный продукт не в одной комадне");
+        }
         return feedback;
     }
 

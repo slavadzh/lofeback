@@ -28,6 +28,7 @@ public class ProductService {
         productRepository.save(toEntity(productDTO));
     }
 
+    @Transactional
     public List<ProductDTO> findAll() {
         return productRepository.findAll().stream().map(this::toDto).collect(Collectors.toList());
     }
@@ -49,11 +50,27 @@ public class ProductService {
         productRepository.deleteById(id);
     }
 
+    @Transactional
+    public Double countAverageRating(Product product) {
+        if(product.getFeedbacks() != null && !product.getFeedbacks().isEmpty()) {
+            double averageRating = 0.0;
+            for(var feedback : product.getFeedbacks()) {
+                averageRating += feedback.getRating();
+            }
+            averageRating /= product.getFeedbacks().size();
+            product.setAverageRating(averageRating);
+            productRepository.save(product);
+            return averageRating;
+        }
+        return 0.0;
+    }
+
     private Product toEntity(ProductDTO productDTO) {
         Product product = new Product();
         product.setName(productDTO.getName());
         product.setDescription(productDTO.getDescription());
         product.setTeam(teamRepository.findById(productDTO.getTeamId()).orElse(null));
+
         return product;
     }
 
@@ -63,6 +80,7 @@ public class ProductService {
         productDTO.setDescription(product.getDescription());
         productDTO.setTeamId(product.getTeam().getId());
         productDTO.setFeedbacks(product.getFeedbacks().stream().map(feedbackService::toDto).collect(Collectors.toList()));
+        productDTO.setAverageRating(countAverageRating(product));
         return productDTO;
     }
 }

@@ -7,7 +7,7 @@ import com.example.Lofeback.entity.Team;
 import com.example.Lofeback.repository.ProfileRepository;
 import com.example.Lofeback.repository.TeamRepository;
 import com.example.Lofeback.security.ProfileDetails;
-import jakarta.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.modelmapper.ModelMapper;
@@ -22,6 +22,7 @@ import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
+@Transactional(readOnly = true)
 public class ProfileService {
 
     private final ProfileRepository profileRepository;
