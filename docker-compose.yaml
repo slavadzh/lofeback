@@ -19,7 +19,7 @@ services:
       retries: 5
 
   app:
-    build: .
+    build: src/main/java
     depends_on:
       postgres:
         condition: service_healthy
